@@ -121,7 +121,9 @@
     this.AmPmButtons = popover.find('.lolliclock-ampm-btn');
     this.amButton = popover.find('#lolliclock-btn-am');
     this.pmButton = popover.find('#lolliclock-btn-pm');
+    
     if(this.options.hour24){
+      this.popover.addClass("hour24");
       this.AmPmButtons.hide()
       this.spanAmPm.hide()
     }
@@ -129,7 +131,7 @@
     //this.dateTimeVal = $('<input type="hidden" id="' + exportName + '"></input>').insertAfter(input);
     // If autoclose is not setted, append a button
     if (!options.autoclose) {
-      this.popover.css('height', '380px');
+      this.popover.addClass("manualclose");
       var $closeButtons = $('<div class="lolliclock-buttons"></div>').appendTo(popover);
       $('<div class="lolliclock-button">Cancel</div>')
         .click($.proxy(this.hide, this))
