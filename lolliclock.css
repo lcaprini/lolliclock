@@ -13,6 +13,15 @@
   font-size: 20px;
   user-select: none;
 }
+.lolliclock-popover.manualclose {
+  height : 380px;   /* add 56px for manual close */
+}
+.lolliclock-popover.hour24 {
+  height : 288px;   /* remove 36px for 24 hours time */
+}
+.lolliclock-popover.manualclose.hour24 {
+  height : 344px;   /* add 56px for manual close and remove 36px for 24 hours time*/
+}
 .lolliclock-popover.animate {
   max-height: 0;
   animation: open-popover 300ms forwards cubic-bezier(0.4, 0, 0.2, 1);
