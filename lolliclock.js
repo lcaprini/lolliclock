@@ -1,5 +1,5 @@
 /*!
- * Lolliclock v0.1.0 
+ * Lolliclock v0.1.0
  * Matthew Krick 2015
  * Inspired by Google's material design & ClockPicker v0.0.7 (http://weareoutman.github.io/clockpicker/)
  */
@@ -159,7 +159,7 @@
         tick.html(i);
         hoursView.append(tick);
       }
-    
+
       for (i = 13; i <= 24; i++) {
         tick = tickTpl.clone();
         radian = (i / 6) * Math.PI;
@@ -168,7 +168,7 @@
           top: dialRadius - Math.cos(radian) * outSizeRadius - tickRadius
         });
         if(i === 24){
-          tick.html("00");  
+          tick.html("00");
         }else{
           tick.html(i);
         }
@@ -212,7 +212,7 @@
         z = Math.sqrt(dx * dx + dy * dy),
         moved = false;
         outsideMode = true
-      
+
       // Ignore plate clicks that aren't even close
       if (z< outSizeRadius + tickRadius && z> outSizeRadius - tickRadius){
         outsideMode = true
@@ -435,9 +435,24 @@
       return new Date('x');
     }
 
+    function time24ToDate(time) {
+      var parts = time.split(':');
+      if (parts.length === 2){
+        var hours = +parts[0];
+        var mins = +parts[1];
+        return new Date(1970, 1, 1, hours, mins);
+      }
+      return new Date('x');
+    }
+
     function isValidTime(time) {
 
       return !isNaN(timeToDate(time).getTime());
+    }
+
+    function isValid24Time(time) {
+
+      return !isNaN(time24ToDate(time).getTime());
     }
 
     var value;
@@ -445,7 +460,9 @@
     var defaultValue = this.options.startTime;
     var placeholderValue = this.input.prop('placeholder');
 
-    if (inputValue && isValidTime(inputValue)) {
+    if (inputValue && this.options.hour24 && isValid24Time(inputValue)) {
+      value = time24ToDate(inputValue);
+    } else if (inputValue && !this.options.hour24 && isValidTime(inputValue)) {
       value = timeToDate(inputValue);
     } else if (defaultValue === 'now') {
       value = new Date();
@@ -464,7 +481,7 @@
     }
     this.minutes = value.getMinutes();
     //purposefully wrong because we change it next line
-    
+
     this.changeAmPm();
 
     // Set time
@@ -585,9 +602,9 @@
           outSizeMode = false;
         }
       }else{
-        unit = Math.PI / 30  
+        unit = Math.PI / 30
       }
-      
+
       var radian = value * unit,
       x = Math.sin(radian) * radius,
       y = -Math.cos(radian) * radius,
@@ -622,7 +639,7 @@
     }else{
       value = Math.round(radian / unit);
     }
-    
+
     // Get the round radian
     radian = value * unit;
 
@@ -643,7 +660,7 @@
         value = 0;
       }
     }
-  
+
     // Once hours or minutes changed, vibrate the device
     if (this[this.currentView] !== value) {
       if (vibrate && this.options.vibrate) {
@@ -656,7 +673,7 @@
         }
       }
     }
-  
+
     //TODO: Keep tens digit static for changing hours
     this[this.currentView] = value;
     function cleanupAnimation($obj) {
@@ -675,7 +692,7 @@
       $oldTime = $(this.spanHours[0].childNodes[0]);
       $newTime = $(this.spanHours[0].childNodes[1]);
       if(this.options.hour24){
-        value = leadingZero(value);  
+        value = leadingZero(value);
       }
     } else {
       $oldTime = $(this.spanMinutes[0].childNodes[0]);
@@ -699,7 +716,7 @@
     this.bg.setAttribute('class', 'lolliclock-canvas-bg');
 
     // Set clock hand and others' position
-    
+
     var r = radius
     if (outSizeMode) {
       r = outSizeRadius
