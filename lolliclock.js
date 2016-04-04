@@ -13,7 +13,8 @@
     startTime: '',	      // default time, '' or 'now' or 'H:MM AM'
     autoclose: false,    	// show Cancel/OK buttons
     vibrate: true,        // vibrate the device when dragging clock hand
-    hour24:false
+    hour24:false,
+    step: 1
   };
 
   // Listen touch events in touch screen device, instead of mouse events in desktop.
@@ -121,6 +122,24 @@
     this.AmPmButtons = popover.find('.lolliclock-ampm-btn');
     this.amButton = popover.find('#lolliclock-btn-am');
     this.pmButton = popover.find('#lolliclock-btn-pm');
+
+    function isValidStep(step){
+      if(!isNaN(step)){
+        step = parseInt(step);
+        var validSteps = [1, 5, 10, 15, 20, 30];
+        if(validSteps.indexOf(step)){
+          return true;
+        }
+      }
+      return false;
+    }
+
+    if(this.options.step && isValidStep(this.options.step)){
+      this.step = parseInt(this.options.step);
+    }
+    else {
+      this.step = 1;
+    }
     
     if(this.options.hour24){
       this.popover.addClass("hour24");
@@ -190,14 +209,17 @@
     }
     // Minutes view
     for (i = 0; i < 60; i += 5) {
-      tick = tickTpl.clone();
-      radian = i / 30 * Math.PI;
-      tick.css({
-        left: dialRadius + Math.sin(radian) * outSizeRadius - tickRadius,
-        top: dialRadius - Math.cos(radian) * outSizeRadius - tickRadius
-      });
-      tick.html(leadingZero(i));
-      minutesView.append(tick);
+
+      if(i % this.step == 0){
+        tick = tickTpl.clone();
+        radian = i / 30 * Math.PI;
+        tick.css({
+          left: dialRadius + Math.sin(radian) * outSizeRadius - tickRadius,
+          top: dialRadius - Math.cos(radian) * outSizeRadius - tickRadius
+        });
+        tick.html(leadingZero(i));
+        minutesView.append(tick);
+      }
     }
 
     //Move click to nearest tick
@@ -740,11 +762,15 @@
 
     var last = this.input.prop('value');
     var value = ""
+
+    value = (Math.round(value / this.step) * this.step) % 60;
+
     if(!this.options.hour24){
       value = this.hours + ':' + leadingZero(this.minutes) + " " + this.amOrPm;
     }else{
       value = leadingZero(this.hours) + ':' + leadingZero(this.minutes) ;
     }
+
     if (value !== last) {
       this.input.prop('value', value);
       this.input.trigger('input');
