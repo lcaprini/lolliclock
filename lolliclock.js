@@ -763,7 +763,7 @@
     var last = this.input.prop('value');
     var value = ""
 
-    value = (Math.round(value / this.step) * this.step) % 60;
+    this.minutes = (Math.round(this.minutes / this.step) * this.step) % 60;
 
     if(!this.options.hour24){
       value = this.hours + ':' + leadingZero(this.minutes) + " " + this.amOrPm;
