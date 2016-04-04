@@ -1,5 +1,5 @@
 .lolliclock-popover {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
@@ -17,7 +17,7 @@
   height : 380px;   /* add 56px for manual close */
 }
 .lolliclock-popover.hour24 {
-  height : 288px;   /* remove 36px for 24 hours time */
+  height : 278px;   /* remove 36px for 24 hours time */
 }
 .lolliclock-popover.manualclose.hour24 {
   height : 344px;   /* add 56px for manual close and remove 36px for 24 hours time*/
@@ -31,7 +31,7 @@
 }
 .lolliclock-header {
   background: #03a9f4;
-  height: 85px;
+  height: 75px;
   width: 196px;
   display: flex;
   color: #fff;
@@ -122,8 +122,11 @@
   padding: 18px 14px;
   width: 168px;
   height: 203px;
-  top: 85px;
+  top: 75px;
   position: absolute;
+}
+.lolliclock-popover.hour24 .popover-content{
+  height: 167px;
 }
 .lolliclock-plate,
 .lolliclock-canvas,
@@ -315,7 +318,7 @@
     height: 0;
   }
   100% {
-    height: 85px;
+    height: 75px;
   }
 }
 @-webkit-keyframes slide-header {
@@ -323,7 +326,7 @@
     height: 0;
   }
   100% {
-    height: 85px;
+    height: 75px;
   }
 }
 @-o-keyframes slide-header {
@@ -331,7 +334,7 @@
     height: 0;
   }
   100% {
-    height: 85px;
+    height: 75px;
   }
 }
 @keyframes slide-header {
@@ -339,7 +342,7 @@
     height: 0;
   }
   100% {
-    height: 85px;
+    height: 75px;
   }
 }
 @-moz-keyframes transition-top-up {
