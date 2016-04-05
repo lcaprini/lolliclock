@@ -1,9 +1,8 @@
 {
   "name": "lolliclock",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "authors": [
-    "Matt Krick <matt.krick@gmail.com>",
-    "Luca Caprini <luca.caprini@gmail.com>"
+    "Matt Krick <matt.krick@gmail.com>"
   ],
   "description": "A material design timepicker based on clockpicker",
   "main": "lolliclock.js",
